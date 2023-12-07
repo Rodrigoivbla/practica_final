@@ -6,31 +6,6 @@
 
 using namespace std;
 
-void Imagen::Allocate(int nrows, int ncols, Pixel * buffer)
-{
-    nf = nrows;
-    nc = ncols;
-
-    data = new Pixel * [nf];
-
-    if (buffer != 0)
-        data[0] = buffer;
-    else
-        data[0] = new Pixel [nf * nc];
-
-    for (int i=1; i < nf; i++)
-        data[i] = data[i-1] + nc;
-}
-
-void Imagen::Initialize (int nrows, int ncols, Pixel * buffer)
-{
-    if ((nrows == 0) || (ncols == 0)){
-        nf = nc = 0;
-        data = 0;
-    }
-    else Allocate(nrows, ncols, buffer);
-}
-
 void Imagen::Borrar()
 {
     if(!(nf == 0 || nc == 0))
@@ -40,16 +15,25 @@ void Imagen::Borrar()
     }
 }
 
-void Imagen::Copiar(const Imagen & I)
+void Imagen::Copiar(const Imagen &I)
 {
-    Initialize(I.nf, I.nc);
+    nf = I.nf;
+    nc = I.nc;
 
-    for (int k = 0; k < nf * nc; k++)
-        set_pixel(k, I.get_pixel(k));
+    data = new Pixel *[nf];
+
+    for(int i = 0; i < nf; ++i)
+    {
+        data[i] = new Pixel[nc];
+
+        for(int j = 0; j < nc; ++j)
+            data[i][j] = I.data[i][j];
+    }
 }
 
 Imagen::Imagen()
 {
+    data = 0;
     nf = 0;
     nc = 0;
 }
@@ -132,7 +116,8 @@ Pixel Imagen::get_pixel(int k) const
 
 Pixel & Imagen::operator()(int i,int j)
 {
-    
+  assert(i>=0 && i<nf && j>=0 && j<nc);
+  return data[i][j];
 }
 
 const Pixel & Imagen::operator()(int i,int j)const
@@ -147,13 +132,14 @@ void Imagen::EscribirImagen(const char * nombre)
     unsigned char * m = new unsigned char [nf*nc];
     
     int total = nf*nc*3;
-
+    
     for (int i=0;i<total;i+=3)
     {
         int posi = i /(nc*3);
         int posj = (i%(nc*3))/3;
-        
+
         aux[i]=data[posi][posj].r;
+        
         aux[i+1]=data[posi][posj].g;
         aux[i+2]=data[posi][posj].b;
         m[i/3]=data[posi][posj].transp;

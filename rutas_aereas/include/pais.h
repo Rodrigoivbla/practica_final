@@ -1,3 +1,7 @@
+
+#ifndef _PAIS_H_
+#define _PAIS_H_
+
 #include "punto.h"
 #include <string>
 #include <iostream>
@@ -12,31 +16,64 @@ private:
     string bandera;
 
 public:
-    Pais() {}
+    Pais() 
+    {
+        pais = "";
+        bandera = "";
+    }
+
+    void setPunto(const Punto &otro)
+    {
+        p = otro;
+    }
 
     Punto GetPunto() const
-    { /*.......*/
+    {
+        return p;
     }
+
     string GetPais() const
-    { /*.......*/
+    {
+        return pais;
     }
+
     string GetBandera() const
-    { /*.......*/
+    {
+        return bandera;
     }
 
     bool operator<(const Pais &P) const
     {
-        //..............
+        if(pais < P.pais)
+            return true;
+        else
+            return false;
     }
 
     bool operator==(const Pais &P) const
     {
-        //..................
+        if(p.latitud == P.p.latitud && p.longitud == P.p.longitud && pais == P.pais && bandera == P.bandera)
+            return true;
+        else
+            return false;
+    }
+
+    bool operator!=(const Pais &P) const
+    {
+        return !(*this == P);
     }
 
     bool operator==(const Punto &P) const
     {
-        //..................
+        if(p.latitud == P.latitud && p.longitud == P.longitud)
+            return true;
+        else
+            return false;
+    }
+
+    bool operator!=(const Punto &P) const
+    {
+        return !(*this == P);
     }
 
     friend istream &operator>>(istream &is, Pais &P)
@@ -55,3 +92,5 @@ public:
         return os;
     }
 };
+
+#endif

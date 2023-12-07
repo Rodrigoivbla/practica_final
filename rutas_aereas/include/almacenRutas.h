@@ -1,7 +1,13 @@
-#include "Ruta.h"
+
+#ifndef _ALMACEN_RUTAS_H_
+#define _ALMACEN_RUTAS_H_
+
+#include "ruta.h"
 #include <map>
 
-class ALmacenRutas{
+class Almacen_Rutas{
   private:
     map<string, Ruta> almacen;
 };
+
+#endif

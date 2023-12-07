@@ -1,5 +1,10 @@
-#include "Pais.h"
+
+#ifndef _PAISES_H_
+#define _PAISES_H_
+
+#include "pais.h"
 #include <set>
+#include <cassert>
 using namespace std;
 class Paises
 {
@@ -8,13 +13,15 @@ private:
 
 public:
     Paises() {}
+
     void Insertar(const Pais &P)
     {
-        //................
+        datos.insert(P);
     }
+
     void Borrar(const Pais &P)
     {
-        //................
+        datos.erase(P);
     }
 
     class const_iterator;
@@ -24,8 +31,27 @@ public:
         set<Pais>::iterator p;
 
     public:
-        //.......................................
-            //.......... 
+        iterator(): p(0)
+        {}
+
+        iterator(const iterator &otro): p(otro.p)
+        {}
+
+        ~iterator()
+        {}
+
+        iterator& operator=(const iterator &otro)
+        {
+            p = otro.p;
+            return *this;
+        }
+
+        Paises& operator*() const
+        {
+            assert(p != 0);
+            return *p;
+        }
+
         friend class Paises;
         friend class const_iterator;
     };
@@ -49,7 +75,9 @@ public:
 
     const_iterator begin() const 
     {
-        //...........
+        const_iterator it;
+        it.p = datos.begin();
+        return it;
     } 
     
     iterator end()
@@ -60,21 +88,28 @@ public:
     }
     const_iterator end() const 
     {
-        //...........
+        const_iterator it;
+        it.p = datos.end();
+        return it;
     } 
         
     iterator find(const Pais &p)
     {
         iterator it;
         set<Pais>::iterator i;
-        for (i = datos.begin(); i != datos.end() && !((*i) == p); ++i)
-            ;
+        for (i = datos.begin(); i != datos.end() && !((*i) == p); ++i);
         it.p = i;
         return it;
     }
+
     iterator find(const Punto &p)
     {
-        //.............
+        
+    }
+
+    bool operator!=(const Pais &P) const
+    {
+
     }
 
     friend istream &operator>>(istream &is, Paises &R)
@@ -99,6 +134,7 @@ public:
     friend ostream &operator<<(ostream &os, const Paises &R)
     {
         Paises::const_iterator it;
+
         for (it = R.begin(); it != R.end(); ++it)
         {
             os << *it << "\t";
@@ -106,3 +142,5 @@ public:
         return os;
     }
 };
+
+#endif

@@ -1,3 +1,7 @@
+
+#ifndef _IMAGEN_H_
+#define _IMAGEN_H_
+
 #include <string>
 
 enum Tipo_Pegado {OPACO, BLENDING};
@@ -58,3 +62,5 @@ class Imagen{
     **/
     Imagen Rota(const Imagen & Io,double angulo);
 }; 
+
+#endif
