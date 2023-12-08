@@ -1,6 +1,5 @@
 #include "imagen.h"
 #include "paises.h"
-#include "almacenRutas.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
@@ -130,7 +129,8 @@ void Pintar( int f1,int f2,int c1,int c2,Imagen &I, const Imagen &avion,int mind
   }
 }  
 
-int main(int argc, char * argv[]){
+int main(int argc, char * argv[])
+{
   if (argc!=7){
     cout<<"Los parametros son:"<<endl;
     cout<<"1.-Fichero con la informacion de los paises"<<endl;
@@ -149,6 +149,7 @@ int main(int argc, char * argv[]){
   f>>Pses;
   cout<<Pses;
   
+  /*
   Imagen I;
   I.LeerImagen(argv[2]);
 
@@ -165,4 +166,5 @@ int main(int argc, char * argv[]){
   string a;
   cin>>a;
   Ruta R=Ar.GetRuta(a);
+  */
 }

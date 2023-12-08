@@ -46,10 +46,31 @@ public:
             return *this;
         }
 
-        Paises& operator*() const
+        const Pais& operator*() const
         {
-            assert(p != 0);
             return *p;
+        }
+
+        iterator& operator++()
+        {
+            p++;
+            return *this;
+        }
+
+        iterator& operator--()
+        {
+            p--;
+            return *this;
+        }
+
+        bool operator!=(const iterator &otro) const
+        {
+            return p != otro.p;
+        }
+
+        bool operator==(const iterator &otro) const
+        {
+            return p == otro.p;
         }
 
         friend class Paises;
@@ -62,7 +83,48 @@ public:
         set<Pais>::const_iterator p;
 
     public:
-        //.....................
+        const_iterator(): p(0)
+        {}
+
+        const_iterator(const const_iterator &otro): p(otro.p)
+        {}
+
+        ~const_iterator()
+        {}
+
+        const_iterator& operator=(const const_iterator &otro)
+        {
+            p = otro.p;
+            return *this;
+        }
+
+        const Pais& operator*() const
+        {
+            return *p;
+        }
+
+        const_iterator& operator++()
+        {
+            p++;
+            return *this;
+        }
+
+        const_iterator& operator--()
+        {
+            p--;
+            return *this;
+        }
+
+        bool operator!=(const const_iterator &otro) const
+        {
+            return p != otro.p;
+        }
+
+        bool operator==(const const_iterator &otro) const
+        {
+            return p == otro.p;
+        }
+
         friend class Paises;
     };
 
@@ -104,12 +166,16 @@ public:
 
     iterator find(const Punto &p)
     {
-        
+        iterator it;
+        set<Pais>::iterator i;
+        for (i = datos.begin(); i != datos.end() && !(*i == p); ++i);
+        it.p = i;
+        return it;
     }
 
     bool operator!=(const Pais &P) const
     {
-
+        return datos.find(P) != datos.end();
     }
 
     friend istream &operator>>(istream &is, Paises &R)
@@ -123,6 +189,7 @@ public:
         }
 
         Pais P;
+        
         while (is >> P)
         {
             rlocal.Insertar(P);

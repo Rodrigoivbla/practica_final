@@ -3,6 +3,9 @@
 #define _PUNTO_H_
 
 #include <string>
+#include <iostream>
+
+using namespace std;
 
 struct Punto{
   double latitud;
