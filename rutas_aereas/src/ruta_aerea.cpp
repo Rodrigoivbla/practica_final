@@ -1,5 +1,6 @@
 #include "imagen.h"
 #include "paises.h"
+#include "almacenRutas.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
@@ -149,9 +150,8 @@ int main(int argc, char * argv[])
   f>>Pses;
   cout<<Pses;
   
-  /*
   Imagen I;
-  I.LeerImagen(argv[2]);
+  //I.LeerImagen(argv[2]);
 
   //Leemos los aviones 
   Imagen avion;
@@ -166,5 +166,5 @@ int main(int argc, char * argv[])
   string a;
   cin>>a;
   Ruta R=Ar.GetRuta(a);
-  */
+  cout << R << endl;
 }

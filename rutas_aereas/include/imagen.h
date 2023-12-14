@@ -17,8 +17,6 @@ class Imagen{
   private:
     Pixel ** data;
     int nf,nc;
-    void Allocate(int nrows, int ncols, Pixel * buffer);
-    void Initialize(int nrows, int ncols, Pixel * buffer = 0);
     void Borrar();
     void Copiar(const Imagen &I);
 
@@ -33,13 +31,9 @@ class Imagen{
     
     ~Imagen();
     
-    void set_pixel(int i, int j, Pixel value);
-    void set_pixel(int k, Pixel value);
     int get_rows() const;
     int get_cols() const;
     int size() const;
-    Pixel get_pixel(int i, int j) const;
-    Pixel get_pixel(int k) const;
     
     Pixel & operator ()(int i,int j);
     

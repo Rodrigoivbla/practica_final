@@ -148,6 +148,7 @@ public:
         it.p = datos.end();
         return it;
     }
+    
     const_iterator end() const 
     {
         const_iterator it;
@@ -171,11 +172,6 @@ public:
         for (i = datos.begin(); i != datos.end() && !(*i == p); ++i);
         it.p = i;
         return it;
-    }
-
-    bool operator!=(const Pais &P) const
-    {
-        return datos.find(P) != datos.end();
     }
 
     friend istream &operator>>(istream &is, Paises &R)

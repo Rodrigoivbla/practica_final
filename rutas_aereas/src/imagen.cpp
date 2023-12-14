@@ -79,16 +79,6 @@ Imagen::~Imagen()
     Borrar();
 }
 
-void Imagen::set_pixel(int i, int j, Pixel value)
-{
-    data[i][j] = value;
-}
-
-void Imagen::set_pixel(int k, Pixel value)
-{
-    data[0][k] = value;
-}
-
 int Imagen::get_rows() const
 {
     return nf;
@@ -102,16 +92,6 @@ int Imagen::get_cols() const
 int Imagen::size() const
 {
     return nf * nc;
-}
-
-Pixel Imagen::get_pixel(int i, int j) const
-{
-    return data[i][j];
-}
-
-Pixel Imagen::get_pixel(int k) const
-{
-    return data[0][k];
 }
 
 Pixel & Imagen::operator()(int i,int j)

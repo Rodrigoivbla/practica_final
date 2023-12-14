@@ -8,11 +8,6 @@ include_directories(${BASE_FOLDER}/include)
 
 add_library(image ${BASE_FOLDER}/src/imagen.cpp  ${BASE_FOLDER}/src/imagenES.cpp rutas_aereas/src/imagen.cpp)
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/${BASE_FOLDER}/src/main.cpp)
-add_executable(main ${BASE_FOLDER}/src/main.cpp)
-target_link_libraries(main LINK_PUBLIC image)
-endif()
-
 if (EXISTS ${CMAKE_SOURCE_DIR}/${BASE_FOLDER}/src/pruebarotacion.cpp)
 add_executable(pruebarotacion ${BASE_FOLDER}/src/pruebarotacion.cpp)
 target_link_libraries(pruebarotacion LINK_PUBLIC image)
