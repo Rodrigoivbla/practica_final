@@ -80,52 +80,42 @@ class Almacen_Rutas{
         friend class const_iterator;
     };
 
-    class const_iterator
-    {
+    class const_iterator{
     private:
-        map<string, Ruta>::const_iterator p;
+        map<string,Ruta>::const_iterator p;
 
     public:
+        
+
         const_iterator(): p(0)
         {}
 
-        const_iterator(const const_iterator &otro): p(otro.p)
+        const_iterator(const iterator &otro): p(otro.p)
         {}
 
         ~const_iterator()
         {}
 
-        const_iterator& operator=(const const_iterator &otro)
-        {
-            p = otro.p;
+        const_iterator& operator++(){
+            ++p;
+            return *this; //referencia al it actual para poder usarlo muchas veces
+        }
+
+        const_iterator& operator--(){
+            --p;
             return *this;
         }
 
-        const pair<string, Ruta>& operator*() const
-        {
+        bool operator==(const const_iterator &it){
+            return p == it.p;
+        }
+
+        bool operator!=(const const_iterator &it){
+            return p != it.p;
+        }
+
+        const pair<string,Ruta> operator*(){
             return *p;
-        }
-
-        const_iterator& operator++()
-        {
-            p++;
-            return *this;
-        }
-
-        const_iterator& operator--()
-        {
-            p--;
-            return *this;
-        }
-
-        bool operator!=(const const_iterator &otro) const
-        {
-            return p != otro.p;
-        }
-
-        bool operator==(const const_iterator &otro) const
-        {
-            return p == otro.p;
         }
 
         friend class Almacen_Rutas;
@@ -192,11 +182,11 @@ class Almacen_Rutas{
     friend ostream &operator<<(ostream &os, const Almacen_Rutas &AR)
     {
         os << "#Rutas" << endl;
-        map<string, Ruta>::const_iterator it;
+        Almacen_Rutas::const_iterator it;
 
-        for (it = AR.almacen.begin(); it != AR.almacen.end(); ++it)
+        for (it = AR.begin(); it != AR.end(); ++it)
         {
-            os << it->first << " " << it->second << "\t" << endl;
+            os << (*it).first << " " << (*it).second << "\t" << endl;
         }
         return os;
     }
