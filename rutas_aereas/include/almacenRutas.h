@@ -56,13 +56,13 @@ class Almacen_Rutas{
 
         iterator& operator++()
         {
-            p++;
+            ++p;
             return *this;
         }
 
         iterator& operator--()
         {
-            p--;
+            --p;
             return *this;
         }
 
@@ -98,7 +98,7 @@ class Almacen_Rutas{
 
         const_iterator& operator++(){
             ++p;
-            return *this; //referencia al it actual para poder usarlo muchas veces
+            return *this;
         }
 
         const_iterator& operator--(){

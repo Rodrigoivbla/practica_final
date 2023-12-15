@@ -161,6 +161,7 @@ int main(int argc, char * argv[])
   f.close();
   f.open (argv[4]);
   f>>Ar;
+  f.close();
   cout<<"Las rutas: "<<endl<<Ar;
   cout<<"Dime el codigo de una ruta"<<endl;
   string a;

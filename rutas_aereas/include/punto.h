@@ -10,17 +10,20 @@ using namespace std;
 struct Punto{
   double latitud;
   double longitud;
+  string name;
 
   Punto()
   {
     latitud = 0;
     longitud = 0;
+    name = "";
   }
 
   Punto(double lat, double lng, string s)
   {
     latitud = lat;
     longitud = lng;
+    name = s;
   }
 
   bool operator==(const Punto &P) const
@@ -38,7 +41,7 @@ struct Punto{
 
   friend ostream &operator<<(ostream &os, const Punto &p)
   {
-    os << p.latitud << "," << p.longitud ;
+    os << "(" << p.latitud << "," << p.longitud << ")";
     return os;
   }
 
