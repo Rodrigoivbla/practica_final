@@ -26,6 +26,16 @@ struct Punto{
     name = s;
   }
 
+  double getLatitud()
+  {
+    return latitud;
+  }
+
+  double getLongitud()
+  {
+    return longitud;
+  }
+
   bool operator==(const Punto &P) const
   {
       if(latitud == P.latitud && longitud == P.longitud)

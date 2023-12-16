@@ -179,7 +179,6 @@ void Imagen::LeerImagen(const char * nombre,const string &nombremascara)
     {
         int posi = i /(c*3);
         int posj = (i%(c*3))/3;
-        cout << posi << " " << posj << endl;
         I.data[posi][posj].r=aux[i];
         I.data[posi][posj].g=aux[i+1];
         I.data[posi][posj].b=aux[i+2];
