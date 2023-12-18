@@ -1,0 +1,51 @@
+/*! \mainpage Practica 1. Imagen
+
+@image html meme.jpeg "xd"
+
+##*
+◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
+##*
+
+##Intro
+
+La práctica se enfoca en elegir la mejor estructura de datos para tareas específicas, requiriendo un sólido conocimiento en
+eficiencia de algoritmos, abstracción de datos y estructuras diversas. Su objetivo es crear un software que permita
+a una aerolínea visualizar sus rutas en un mapa mundial, mostrando banderas y aviones para marcar países y la ruta
+con precisión. Hemos definido las estructuras de Punto, Ruta, Almacén de Rutas e Imagen, además de probar
+exhaustivamente las funciones antes de su implementación.
+
+##*
+◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
+##*
+
+# Ejecutables
+
+El programa "Ruta Aérea" tiene como objetivo generar un mapa mundial con una ruta específica sobre él. Requiere que el
+usuario ingrese archivos de países, rutas, una imagen del mapa, la representación gráfica de un avión y su máscara,
+además de especificar la ubicación de las banderas de cada país.
+
+Para probar esta función, se invoca desde la línea de comandos proporcionando archivos y directorios relevantes como
+argumentos.: El programa muestra las rutas disponibles y solicita al usuario seleccionar una mediante un código.
+
+    *$ ./ruta_aerea paises.txt mapa.ppm dir_banderas almacen_rutas.txt avion.ppm mascara_avion.pgm*
+
+Posteriormente, guarda una imagen en formato ppm con el nombre de la ruta seleccionada y muestra en la consola la
+secuencia de países por los que pasa la ruta. La imagen resultante presenta las banderas en la ubicación geográfica
+exacta de la ruta y representa el avión en puntos específicos de la misma.
+
+La conversión de coordenadas a píxeles en la imagen se realiza utilizando ecuaciones específicas que emplean la
+longitud y la latitud para determinar la posición en la imagen del mapa mundial, permitiendo una representación precisa
+de la ruta y sus elementos gráficos.
+
+##*
+◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
+##*
+## Imagen:
+
+##*
+◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
+##*
+## Rutas aereas:
+
+
+*/
