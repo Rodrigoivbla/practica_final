@@ -4,3 +4,4 @@ INPUT                  = @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/include @CMAKE_SOURCE_
 GENERATE_LATEX         = NO
 IMAGE_PATH             = @CMAKE_SOURCE_DIR@/@BASE_FOLDER@/doc
 EXTRACT_PRIVATE        = NO
+MAINPAGE               = @CMAKE_CURRENT_BINARY_DIR@/doc/mainpage.dox
