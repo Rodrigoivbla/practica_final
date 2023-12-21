@@ -1,3 +1,7 @@
+/**
+ * @file pais.h
+ * @brief Fichero cabecera que gestiona los países utilizados
+ */
 
 #ifndef _PAIS_H_
 #define _PAIS_H_
@@ -8,76 +12,96 @@
 
 using namespace std;
 
-class Pais
-{
+/**
+ * @class Pais
+ * @brief Clase para gestionar un país con su ubicación y bandera
+ */
+class Pais {
 private:
-    Punto p;
-    string pais;
-    string bandera;
+    Punto p; /**< Ubicación geográfica */
+    string pais; /**< Nombre del país */
+    string bandera; /**< Ruta de la bandera del país */
 
 public:
-    Pais() 
-    {
+    /**
+     * @brief Constructor por defecto de la clase Pais
+     */
+    Pais() {
         pais = "";
         bandera = "";
     }
 
-    void setPunto(const Punto &otro)
-    {
+    /**
+     * @brief Establece la ubicación geográfica del país
+     * @param otro Objeto Punto con la ubicación geográfica
+     */
+    void setPunto(const Punto &otro) {
         p = otro;
     }
 
-    Punto GetPunto() const
-    {
+    /**
+     * @brief Obtiene la ubicación geográfica del país
+     * @return Objeto Punto con la ubicación
+     */
+    Punto GetPunto() const {
         return p;
     }
 
-    string GetPais() const
-    {
+    /**
+     * @brief Obtiene el nombre del país
+     * @return Nombre del país
+     */
+    string GetPais() const {
         return pais;
     }
 
-    string GetBandera() const
-    {
+    /**
+     * @brief Obtiene la ruta de la bandera del país
+     * @return Ruta de la bandera
+     */
+    string GetBandera() const {
         return bandera;
     }
 
-    bool operator<(const Pais &P) const
-    {
-        if(pais < P.pais)
-            return true;
-        else
-            return false;
+    /**
+     * @brief Sobrecarga del operador menor que para comparar países
+     */
+    bool operator<(const Pais &P) const {
+        return pais < P.pais;
     }
 
-    bool operator==(const Pais &P) const
-    {
-        if(p.latitud == P.p.latitud && p.longitud == P.p.longitud && pais == P.pais && bandera == P.bandera)
-            return true;
-        else
-            return false;
+    /**
+     * @brief Sobrecarga del operador de igualdad para comparar países
+     */
+    bool operator==(const Pais &P) const {
+        return (p.latitud == P.p.latitud && p.longitud == P.p.longitud && pais == P.pais && bandera == P.bandera);
     }
 
-    bool operator!=(const Pais &P) const
-    {
+    /**
+     * @brief Sobrecarga del operador de desigualdad para comparar países
+     */
+    bool operator!=(const Pais &P) const {
         return !(*this == P);
     }
 
-    bool operator==(const Punto &P) const
-    {
-        if(p.latitud == P.latitud && p.longitud == P.longitud)
-            return true;
-        else
-            return false;
+    /**
+     * @brief Sobrecarga del operador de igualdad para comparar con un Punto
+     */
+    bool operator==(const Punto &P) const {
+        return (p.latitud == P.latitud && p.longitud == P.longitud);
     }
 
-    bool operator!=(const Punto &P) const
-    {
+    /**
+     * @brief Sobrecarga del operador de desigualdad para comparar con un Punto
+     */
+    bool operator!=(const Punto &P) const {
         return !(*this == P);
     }
 
-    friend istream &operator>>(istream &is, Pais &P)
-    {
+    /**
+     * @brief Sobrecarga del operador de inserción para leer datos de un flujo de entrada
+     */
+    friend istream &operator>>(istream &is, Pais &P) {
         double lat, lng;
 
         is >> lat >> lng >> P.pais >> P.bandera;
@@ -85,9 +109,11 @@ public:
         P.p = Punto(lat, lng, "");
         return is;
     }
-    
-    friend ostream &operator<<(ostream &os, const Pais &P)
-    {
+
+    /**
+     * @brief Sobrecarga del operador de extracción para escribir datos en un flujo de salida
+     */
+    friend ostream &operator<<(ostream &os, const Pais &P) {
         os << P.p << " " << P.pais << " " << P.bandera << endl;
         return os;
     }
