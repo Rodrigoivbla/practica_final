@@ -1,3 +1,9 @@
+/**
+  * @file imagen.cpp
+  * @brief Fichero con las definiciones de Imagagen
+  *
+  */
+
 #include "imagen.h"
 #include "imagenES.h"
 #include <cmath>
