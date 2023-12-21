@@ -37,11 +37,19 @@ public:
     }
 
 
+    /**
+    * @brief Inserta un punto en la lista de puntos de la ruta
+    * @param p Punto a insertar
+    */
     void Insertar(const Punto &p)
     {
         ruta.push_back(p);
     }
 
+    /**
+     * @brief Borra un punto de la lista de puntos de la ruta
+     * @param p Punto a borrar
+     */
     void Borrar(const Punto &p)
     {
         iterator it = find(p);
@@ -51,6 +59,11 @@ public:
     }
 
     class const_iterator;
+
+    /**
+    * @class iterator
+    * @brief Iterador para recorrer y manipular la lista de puntos de la ruta
+    */
     class iterator
     {
     private:
@@ -103,6 +116,10 @@ public:
         friend class const_iterator;
     };
 
+    /**
+    * @class const_iterator
+    * @brief Iterador constante para recorrer la lista de puntos de la ruta
+    */
     class const_iterator
     {
     private:
@@ -154,6 +171,10 @@ public:
         friend class Ruta;
     };
 
+    /**
+     * @brief Obtiene un iterador al principio de la lista de puntos de la ruta
+     * @return Iterador al principio de la lista
+     */
     iterator begin()
     {
         iterator it;
@@ -161,20 +182,32 @@ public:
         return it;
     }
 
+    /**
+    * @brief Obtiene un iterador constante al principio de la lista de puntos de la ruta
+    * @return Iterador constante al principio de la lista
+    */
     const_iterator begin() const 
     {
         const_iterator it;
         it.p = ruta.begin();
         return it;
-    } 
-    
+    }
+
+    /**
+     * @brief Obtiene un iterador al final de la lista de puntos de la ruta
+     * @return Iterador al final de la lista
+     */
     iterator end()
     {
         iterator it;
         it.p = ruta.end();
         return it;
     }
-    
+
+    /**
+     * @brief Obtiene un iterador constante al final de la lista de puntos de la ruta
+     * @return Iterador constante al final de la lista
+     */
     const_iterator end() const 
     {
         const_iterator it;
@@ -182,6 +215,11 @@ public:
         return it;
     }
 
+    /**
+    * @brief Busca un punto en la lista de puntos de la ruta
+    * @param p Punto a buscar
+    * @return Iterador apuntando al punto encontrado
+    */
     iterator find(const Punto &p)
     {
         iterator it;
