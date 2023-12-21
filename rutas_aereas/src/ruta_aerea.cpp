@@ -100,6 +100,7 @@ Imagen Rota(const Imagen &Io, double angulo) {
 }
 
 
+
 /**
  * @brief Dibuja la representación de un avión entre dos puntos dados en una imagen.
  * @param f1 Coordenada de fila del primer punto.
@@ -159,87 +160,70 @@ int main(int argc, char *argv[]) {
     f >> Pses;
     // cout << Pses;
 
-    Imagen I;
-    I.LeerImagen(argv[2]);
+  Imagen I;
+  I.LeerImagen(argv[2]);
+  
+  // Leemos los aviones 
+  Imagen avion;
+  avion.LeerImagen(argv[5], argv[6]);
+  
+  Almacen_Rutas Ar;
+  f.close();
+  f.open(argv[4]);
+  f >> Ar;
+  cout << "Las rutas: " << endl << Ar;
+  cout << "Dime el codigo de una ruta" << endl;
+  string a;
+  cin >> a;
+  Ruta R = Ar.GetRuta(a);
 
-    // Leemos los aviones
-    Imagen avion;
-    avion.LeerImagen(argv[5], argv[6]);
+  
+  Ruta::iterator it_r, it_r_anterior;
+  Paises::iterator it_p = Pses.end(), it_p_anterior = Pses.end();
+  Imagen bandera_ini;
+  int i_ini, j_ini;
 
-    Almacen_Rutas Ar;
-    f.close();
-    f.open(argv[4]);
-    f >> Ar;
-    cout << "Las rutas: " << endl << Ar;
-    cout << "Dime el codigo de una ruta" << endl;
-    string a;
-    cin >> a;
+  for(it_r = R.begin(); it_r != R.end(); ++it_r) 
+  {
+    Punto pto = (*it_r);
+      
+    it_p_anterior = it_p;
+    it_p = Pses.find(pto);
 
+    cout << (*it_p).GetPais() << " ";
+      
+    string name = (*it_p).GetBandera();
+    string n_com = argv[3] + name;
+      
+    Imagen bandera;
+    bandera.LeerImagen(n_com.c_str(), "");
+	
+    int x = (int)((I.num_cols() / 360.0) * (180 + pto.getLongitud()));
+	  int y = (int)((I.num_filas() / 180.0) * (90-pto.getLatitud()));
+	
+    if(it_p_anterior != Pses.end()) 
+    {
+	    int x_old = (int)((I.num_cols() / 360.0) * (180 + (*it_r_anterior).getLongitud()));
+	    int y_old = (int)((I.num_filas() / 180.0) * (90 - (*it_r_anterior).getLatitud()));
+	  
+	    Pintar(y_old - avion.num_filas() / 2, y - avion.num_filas() / 2, 
+             x_old - avion.num_cols() / 2, x - avion.num_cols() / 2, 
+             I, avion, 50, 50);
+	  }
+	  
+	  I.PutImagen(y - bandera.num_filas() / 2, x - bandera.num_cols() / 2, bandera, BLENDING);
+	
+    if(it_p != Pses.begin())
+	    I.PutImagen(i_ini - bandera_ini.num_filas() / 2, j_ini - bandera_ini.num_cols() / 2, bandera_ini, BLENDING);
 
-    Ruta R = Ar.GetRuta(a);
-
-    Ruta::iterator it_r, it_r_anterior;
-    Paises::iterator it_p_anterior = Pses.end();
-    Paises::iterator it_p = Pses.end();
-    Imagen bandera_ini;
-    int posi_ini, posj_ini;
-
-    vector <string> paises_recorridos; // Vector para almacenar los nombres de los países recorridos
-
-
-    for (it_r = R.begin(); it_r != R.end(); ++it_r) {
-        Punto pto = (*it_r);
-
-        it_p_anterior = it_p;
-        it_p = Pses.find(pto);
-
-        string name = (*it_p).GetBandera();
-        string n_com = argv[3] + name;
-
-        Imagen bandera;
-        bandera.LeerImagen(n_com.c_str(), "");
-
-        int x = (int) ((I.num_cols() / 360.0) * (180 + pto.getLongitud()));
-        int y = (int) ((I.num_filas() / 180.0) * (90 - pto.getLatitud()));
-
-        if (it_p_anterior != Pses.end()) {
-            int x_old = (int) ((I.num_cols() / 360.0) * (180 + (*it_r_anterior).getLongitud()));
-            int y_old = (int) ((I.num_filas() / 180.0) * (90 - (*it_r_anterior).getLatitud()));
-
-            Pintar(y_old - avion.num_filas() / 2, y - avion.num_filas() / 2,
-                   x_old - avion.num_cols() / 2, x - avion.num_cols() / 2,
-                   I, avion, 50, 50);
-        }
-
-        I.PutImagen(y - bandera.num_filas() / 2, x - bandera.num_cols() / 2, bandera, BLENDING);
-
-        if (it_p != Pses.begin())
-            I.PutImagen(posi_ini - bandera_ini.num_filas() / 2, posj_ini - bandera_ini.num_cols() / 2, bandera_ini,
-                        BLENDING);
-
-        bandera_ini = bandera;
-        posi_ini = y;
-        posj_ini = x;
-        it_r_anterior = it_r;
-
-        // Agregar el nombre del país recorrido al vector
-        if (it_p != Pses.end()) {
-            paises_recorridos.push_back((*it_p).GetPais());
-        }
-    }
-
-    // Código para pintar banderas en el mapa...
-
-    string nuevo_mapa = "mapa_" + a + ".ppm";
-    I.EscribirImagen(nuevo_mapa.c_str());
-
-    cout << "Paises recorridos: " << endl;
-    for (int i = 0; i < paises_recorridos.size(); i++) {
-        cout << paises_recorridos[i];
-        if (i != paises_recorridos.size() - 1)
-            cout << " -> ";
-    }
-    cout << "\n";
-
-    return 0;
+	  bandera_ini = bandera;
+    it_r_anterior = it_r;
+	  i_ini = y;
+	  j_ini = x;
+  }	
+  
+  cout << endl;
+      
+  string nuevo_mapa = "mapa_" + a + ".ppm";
+  I.EscribirImagen(nuevo_mapa.c_str());
 }

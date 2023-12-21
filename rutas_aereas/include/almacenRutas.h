@@ -10,15 +10,33 @@
 #include <map>
 
 /**
- * @brief Clase que representa un almacén de rutas
- */
-class Almacen_Rutas {
-private:
-    map <string, Ruta> almacen; /**< Mapa que almacena las rutas */
+  @brief T.D.A. Almacen_Rutas
 
-public:
+  Una instancia del tipo de dato abstracto Almacen_Rutas nos permite almacenar datos sobre un conjunto de rutas.
+  Este tipo de dato abstracto está representado mediante un map de rutas, en el que la clave es el nombre de la ruta y el valor mapeado es la ruta en sí.
+
+  El TDA Almacen_Rutas proporciona además distintas herramientas para la manipulación de dicho conjunto de rutas.
+
+  Para poder usar el TDA Almacen_Rutas se debe incluir el fichero
+
+  \#include <almacenRutas.h>
+
+  @author Rodrigo Ibáñez Blanco
+  @author Brandon Rene Morales Viracocha
+  @date Diciembre 2023
+**/
+class Almacen_Rutas{
+  private:
     /**
-     * @brief Constructor por defecto
+     * @brief Mapa que almacena las rutas. La clave es el nombre de la ruta, y el valor mapeado es la ruta en sí. 
+    **/
+    map<string, Ruta> almacen;
+
+  public:
+    /**
+     * @brief Constructor por defecto.
+     * @return Almacen de rutas, el objeto almacén de rutas creado.
+     * @post Genera una instancia de la clase Almacen_rutas con un conjunto de rutas vacío.
      */
     Almacen_Rutas() {}
 
@@ -26,24 +44,28 @@ public:
      * @brief Obtiene una ruta del almacén
      * @param s Nombre de la ruta a obtener
      * @return Ruta correspondiente al nombre proporcionado
+     * @post El almacén de rutas no se modifica
      */
-    Ruta GetRuta(const string &s) {
-        return almacen[s];
+    Ruta GetRuta(const string &s) const
+    {
+        return almacen.at(s);
     }
 
     /**
-     * @brief Inserta una ruta en el almacén
-     * @param R Ruta a insertar
+     * @brief Inserta una ruta en el almacén.
+     * @param R Ruta a insertar.
      */
-    void Insertar(const Ruta &R) {
+    void Insertar(const Ruta &R)
+    {
         almacen[R.getNombre()] = R;
     }
 
     /**
-     * @brief Borra una ruta del almacén
-     * @param s Nombre de la ruta a borrar
+     * @brief Borra una ruta del almacén.
+     * @param s Nombre de la ruta a borrar.
      */
-    void Borrar(const string &s) {
+    void Borrar(const string &s)
+    {
         almacen.erase(s);
     }
 
@@ -220,11 +242,12 @@ public:
     }
 
     /**
- * @brief Encuentra una ruta en el conjunto según el nombre proporcionado
- * @param s Nombre de la ruta a buscar
- * @return Iterador apuntando a la ruta encontrada o al final si no se encuentra
- */
-    iterator find(const string &s) {
+         * @brief Busca una ruta por el nombre dentro del almacén de rutas.
+         * @param s Referencia constante al nombre de la ruta que se quiere buscar.
+         * @return Iterador que apunta a la ruta con el nombre pasado como parámetro.
+        **/
+    iterator find(const string &s)
+    {
         iterator it;
         map<string, Ruta>::iterator i;
         for (i = almacen.begin(); i != almacen.end() && !((*i).first == s); ++i);
@@ -233,12 +256,13 @@ public:
     }
 
     /**
-     * @brief Sobrecarga del operador de entrada >>
-     * @param is Stream de entrada
-     * @param AR Almacén de rutas
-     * @return Referencia al stream de entrada
+     * @brief Sobrecarga del operador de entrada >>.
+     * @param is Stream de entrada.
+     * @param AR Almacén de rutas a leer.
+     * @return Referencia al stream de entrada.
      */
-    friend istream &operator>>(istream &is, Almacen_Rutas &AR) {
+    friend istream &operator>>(istream &is, Almacen_Rutas &AR)
+    {
         Almacen_Rutas arlocal;
         // leemos el comentario
         if (is.peek() == '#') {
@@ -257,12 +281,13 @@ public:
     }
 
     /**
-     * @brief Sobrecarga del operador de salida <<
-     * @param os Stream de salida
-     * @param AR Almacén de rutas
-     * @return Referencia al stream de salida
+     * @brief Sobrecarga del operador de salida <<.
+     * @param os Stream de salida.
+     * @param AR Almacén de rutas a escribir.
+     * @return Referencia al stream de salida.
      */
-    friend ostream &operator<<(ostream &os, const Almacen_Rutas &AR) {
+    friend ostream &operator<<(ostream &os, const Almacen_Rutas &AR)
+    {
         os << "#Rutas" << endl;
         Almacen_Rutas::const_iterator it;
 

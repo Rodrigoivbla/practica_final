@@ -44,11 +44,6 @@ Imagen::Imagen()
     nc = 0;
 }
 
-Imagen::Imagen(const Imagen &I)
-{
-    Copiar(I);
-}
-
 Imagen::Imagen(int f,int c)
 {
   nf = f;
@@ -69,6 +64,11 @@ Imagen::Imagen(int f,int c)
   }  
 }
 
+Imagen::Imagen(const Imagen &I)
+{
+    Copiar(I);
+}
+
 Imagen & Imagen::operator=(const Imagen &I)
 {
     if(this != &I)
@@ -83,21 +83,6 @@ Imagen & Imagen::operator=(const Imagen &I)
 Imagen::~Imagen()
 {
     Borrar();
-}
-
-int Imagen::get_rows() const
-{
-    return nf;
-}
-
-int Imagen::get_cols() const
-{
-    return nc;
-}
-
-int Imagen::size() const
-{
-    return nf * nc;
 }
 
 Pixel & Imagen::operator()(int i,int j)
@@ -202,9 +187,21 @@ void Imagen::LeerImagen(const char * nombre,const string &nombremascara)
     delete []aux;
 }
 
+void Imagen::LimpiarTransp()
+{
+    for(int i = 0; i < nf; ++i)
+    {
+        for(int j = 0; j < nc; ++j)
+        {
+            if(data[i][j].transp != 0 && data[i][j].transp != 255)
+                data[i][j].transp = 0;
+        }
+    }
+}
+
 void Imagen::PutImagen(int posi,int posj, const Imagen &I,Tipo_Pegado tippegado)
 {
-    //assert(nf>=posi+I.nf && nc>=posj+I.nc);
+    assert(nf>=posi+I.nf && nc>=posj+I.nc);
     
     for (int i=0;i<I.nf;i++)
     {
@@ -225,6 +222,21 @@ void Imagen::PutImagen(int posi,int posj, const Imagen &I,Tipo_Pegado tippegado)
 	        }	
         }
     }
+}
+
+Imagen Imagen::ExtraeImagen(int posi,int posj,int dimi,int dimj)
+{
+    Imagen aux(dimi, dimj);
+
+    for(int i = posi; i < dimi; ++i)
+    {
+        for(int j = posj; j < dimj; ++j)
+        {
+            aux.data[i - posi][j - posj] = data[i][j]; 
+        }
+    }
+
+    return aux;
 }
 
 Imagen Imagen::Rota(const Imagen & Io,double angulo)
