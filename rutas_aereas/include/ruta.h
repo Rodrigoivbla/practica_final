@@ -1,3 +1,7 @@
+/**
+ * @file ruta.h
+ * @brief Archivo de cabecera para la gestión de rutas
+ */
 
 #ifndef _RUTA_H_
 #define _RUTA_H_
@@ -6,21 +10,32 @@
 #include <string>
 #include <list>
 
-class Ruta{
-  private:
-    string nombre;
-    list<Punto> ruta;
+/**
+ * @class Ruta
+ * @brief Clase que gestiona una ruta compuesta por una lista de puntos
+ */
+class Ruta {
+private:
+    string nombre; /**< Nombre de la ruta */
+    list<Punto> ruta; /**< Lista de puntos de la ruta */
 
-  public:
-    string getNombre() const
-    {
+public:
+    /**
+     * @brief Obtiene el nombre de la ruta
+     * @return El nombre de la ruta
+     */
+    string getNombre() const {
         return nombre;
     }
 
-    list<Punto> getRuta() const
-    {
+    /**
+     * @brief Obtiene la lista de puntos que componen la ruta
+     * @return La lista de puntos de la ruta
+     */
+    list<Punto> getRuta() const {
         return ruta;
     }
+
 
     void Insertar(const Punto &p)
     {
@@ -176,39 +191,45 @@ class Ruta{
         return it;
     }
 
-    bool operator!=(const Ruta &R)
-    {
-        if(nombre == R.nombre)
-        {
+    /**
+     * @brief Sobrecarga del operador de desigualdad !=
+     * @param R Ruta con la que se compara
+     * @return Devuelve true si las rutas son diferentes, false en caso contrario
+     */
+    bool operator!=(const Ruta &R) {
+        if (nombre == R.nombre) {
             return true;
         }
 
-        if(ruta.size() != R.ruta.size())
-        {
+        if (ruta.size() != R.ruta.size()) {
             return true;
         }
 
+        // Comparación de la lista de puntos en ambas rutas
         const_iterator r_it = R.begin();
 
-        for(iterator it = begin(); it != end() && r_it != R.end(); ++it, ++r_it)
-        {
-            if(*it != *r_it)
+        for (iterator it = begin(); it != end() && r_it != R.end(); ++it, ++r_it) {
+            if (*it != *r_it)
                 return true;
         }
     }
 
-    friend istream &operator>>(istream &is, Ruta &R)
-    {
+    /**
+     * @brief Sobrecarga del operador de inserción en flujo de entrada
+     * @param is Flujo de entrada
+     * @param R Ruta a leer
+     * @return El flujo de entrada con la ruta leída
+     */
+    friend istream &operator>>(istream &is, Ruta &R) {
         Ruta rlocal;
 
         int n_loc;
         Punto P;
-        
+
         is >> rlocal.nombre;
         is >> n_loc;
 
-        for(int i = 0; i < n_loc; ++i)
-        {
+        for (int i = 0; i < n_loc; ++i) {
             is >> P;
             rlocal.Insertar(P);
         }
@@ -217,15 +238,19 @@ class Ruta{
         return is;
     }
 
-    friend ostream &operator<<(ostream &os, const Ruta &R)
-    {
+    /**
+     * @brief Sobrecarga del operador de inserción en flujo de salida
+     * @param os Flujo de salida
+     * @param R Ruta a mostrar
+     * @return El flujo de salida con la ruta insertada
+     */
+    friend ostream &operator<<(ostream &os, const Ruta &R) {
         const_iterator it;
 
-        os << R.ruta.size();
+        os << R.ruta.size(); // Muestra el tamaño de la lista de puntos
 
-        for (it = R.begin(); it != R.end(); ++it)
-        {
-            os << " " << *it << "\t";
+        for (it = R.begin(); it != R.end(); ++it) {
+            os << " " << *it << "\t"; // Muestra cada punto de la ruta
         }
 
         return os;
