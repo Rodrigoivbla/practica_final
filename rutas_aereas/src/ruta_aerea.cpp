@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include "vector"
 
 using namespace std;
 
@@ -14,17 +15,16 @@ using namespace std;
  * @return Una nueva imagen que es la versión rotada de Io.
  * */
 
-Imagen Rota(const Imagen & Io,double angulo)
-{
+Imagen Rota(const Imagen &Io, double angulo) {
     double rads = angulo;
     double coseno = cos(angulo);
     double seno = sin(angulo);
 
     //Para obtener las dimensiones de la imagen
-    int rcorners[4],ccorners[4];
-    int newimgrows,newimgcols;
-    double new_row_min,new_col_min,new_row_max,new_col_max;
-    double inter,inter1;
+    int rcorners[4], ccorners[4];
+    int newimgrows, newimgcols;
+    double new_row_min, new_col_min, new_row_max, new_col_max;
+    double inter, inter1;
 
     rcorners[0] = 0;
     rcorners[1] = 0;
@@ -43,175 +43,185 @@ Imagen Rota(const Imagen & Io,double angulo)
     newimgrows = 0;
     newimgcols = 0;
 
-    for(int count = 0; count < 4; count++)
-    {
-	    inter = rcorners[count] * coseno + ccorners[count] * seno;
-	   
-	    if(inter < new_row_min)
-		    new_row_min = inter;
+    for (int count = 0; count < 4; count++) {
+        inter = rcorners[count] * coseno + ccorners[count] * seno;
 
-	    if(inter > new_row_max)
-		    new_row_max = inter;
+        if (inter < new_row_min)
+            new_row_min = inter;
 
-	    inter1 = -rcorners[count] * seno + ccorners[count] * coseno;
-	   
-	    if(inter1 < new_col_min)
-		    new_col_min = inter1;	
+        if (inter > new_row_max)
+            new_row_max = inter;
 
-	    if(inter1 > new_col_max)
-		    new_col_max = inter1;
-   }
-    
-  newimgrows = (unsigned)ceil((double)new_row_max - new_row_min);
-  newimgcols = (unsigned)ceil((double)new_col_max - new_col_min);
-  
-  Imagen Iout(newimgrows,newimgcols);
+        inter1 = -rcorners[count] * seno + ccorners[count] * coseno;
 
-  for(int rows = 0; rows < newimgrows; rows++)
-  {
-    for(int cols = 0; cols < newimgcols; cols++)
-    {
-	   float oldrowcos = ((float)rows + new_row_min) * cos(-rads);
-	   float oldrowsin = ((float)rows + new_row_min) * sin(-rads);
-	   float oldcolcos = ((float)cols + new_col_min) * cos(-rads);
-	   float oldcolsin = ((float)cols + new_col_min) * sin(-rads);
+        if (inter1 < new_col_min)
+            new_col_min = inter1;
 
-	   float old_row = oldrowcos + oldcolsin;
-	   float old_col = -oldrowsin + oldcolcos;
+        if (inter1 > new_col_max)
+            new_col_max = inter1;
+    }
 
-	   old_row = ceil((double)old_row);
-	   old_col = ceil((double)old_col);
-     
-	   if((old_row >= 0) && (old_row < Io.num_filas()) &&
-	      (old_col >= 0) && (old_col < Io.num_cols()))
-	   {
-	      Iout(rows,cols) = Io(old_row,old_col);
-              
-	   }
-	   else
-     {
-	     Iout(rows,cols).r = Iout(rows,cols).g = Iout(rows,cols).b = 255;
-       Iout(rows,cols).transp = 0;
-     }
-	  }
-  }
-  
-  return Iout;
+    newimgrows = (unsigned) ceil((double) new_row_max - new_row_min);
+    newimgcols = (unsigned) ceil((double) new_col_max - new_col_min);
+
+    Imagen Iout(newimgrows, newimgcols);
+
+    for (int rows = 0; rows < newimgrows; rows++) {
+        for (int cols = 0; cols < newimgcols; cols++) {
+            float oldrowcos = ((float) rows + new_row_min) * cos(-rads);
+            float oldrowsin = ((float) rows + new_row_min) * sin(-rads);
+            float oldcolcos = ((float) cols + new_col_min) * cos(-rads);
+            float oldcolsin = ((float) cols + new_col_min) * sin(-rads);
+
+            float old_row = oldrowcos + oldcolsin;
+            float old_col = -oldrowsin + oldcolcos;
+
+            old_row = ceil((double) old_row);
+            old_col = ceil((double) old_col);
+
+            if ((old_row >= 0) && (old_row < Io.num_filas()) &&
+                (old_col >= 0) && (old_col < Io.num_cols())) {
+                Iout(rows, cols) = Io(old_row, old_col);
+
+            } else {
+                Iout(rows, cols).r = Iout(rows, cols).g = Iout(rows, cols).b = 255;
+                Iout(rows, cols).transp = 0;
+            }
+        }
+    }
+
+    return Iout;
 }
 
-void Pintar( int f1,int f2,int c1,int c2,Imagen &I, const Imagen &avion,int mindisf,int mindisc)
-{      
-  int fila,col;
+void Pintar(int f1, int f2, int c1, int c2, Imagen &I, const Imagen &avion, int mindisf, int mindisc) {
+    int fila, col;
 
-  if(abs(f2 - f1) >= mindisf || abs(c2 - c1) >= mindisc)
-  { 
-    if (c1 != c2)
-    {
-      double a, b;
-      a = double(f2 - f1) / double(c2 - c1);
-      b = f1 - a * c1;
-      col = (int)(c1 + c2) / 2;
-      fila = (int)rint(a * col + b);
-    }  
-    else
-    {
-      col = c1;
-      fila = (f1 + f2) / 2;
-    }  
+    if (abs(f2 - f1) >= mindisf || abs(c2 - c1) >= mindisc) {
+        if (c1 != c2) {
+            double a, b;
+            a = double(f2 - f1) / double(c2 - c1);
+            b = f1 - a * c1;
+            col = (int) (c1 + c2) / 2;
+            fila = (int) rint(a * col + b);
+        } else {
+            col = c1;
+            fila = (f1 + f2) / 2;
+        }
 
-    double angulo = atan2((f2 - f1), (c2 - c1));
-    Imagen Irota = Rota(avion, angulo);
-    I.PutImagen(fila, col, Irota, OPACO);//pensar si debe ser opaco o blending
+        double angulo = atan2((f2 - f1), (c2 - c1));
+        Imagen Irota = Rota(avion, angulo);
+        I.PutImagen(fila, col, Irota, OPACO);//pensar si debe ser opaco o blending
 
-    angulo = atan2((f2 - fila), (c2 - col));
-    Irota = Rota(avion, angulo);
-    I.PutImagen(f2, c2, Irota, OPACO);//pensar si debe ser opaco o blending
+        angulo = atan2((f2 - fila), (c2 - col));
+        Irota = Rota(avion, angulo);
+        I.PutImagen(f2, c2, Irota, OPACO);//pensar si debe ser opaco o blending
 
-    angulo = atan2((fila - f1), (col - c1));
-    Irota = Rota(avion, angulo);
-    I.PutImagen(f1, c1, Irota, OPACO);//pensar si debe ser opaco o blending
-  }   
-}  
+        angulo = atan2((fila - f1), (col - c1));
+        Irota = Rota(avion, angulo);
+        I.PutImagen(f1, c1, Irota, OPACO);//pensar si debe ser opaco o blending
+    }
+}
 
 int main(int argc, char *argv[]) {
 
-  if(argc != 7) {
-    cout << "Los parametros son:" << endl;
-    cout << "1.-Fichero con la informacion de los paises" << endl;
-    cout << "2.-Nombre de la imagen con el mapa del mundo" << endl;
-    cout << "3.-Directorio con las banderas" << endl;
-    cout << "4.-Fichero con el almacen de rutas" << endl;
-    cout << "5.- Nombre de la imagen con el avion" << endl;
-    cout << "6.- Nombre de la imagen de la mascara del avion" << endl;
-      
+    if (argc != 7) {
+        cout << "Los parametros son:" << endl;
+        cout << "1.-Fichero con la informacion de los paises" << endl;
+        cout << "2.-Nombre de la imagen con el mapa del mundo" << endl;
+        cout << "3.-Directorio con las banderas" << endl;
+        cout << "4.-Fichero con el almacen de rutas" << endl;
+        cout << "5.- Nombre de la imagen con el avion" << endl;
+        cout << "6.- Nombre de la imagen de la mascara del avion" << endl;
+
+        return 0;
+    }
+
+    Paises Pses;
+    ifstream f(argv[1]);
+    f >> Pses;
+    // cout << Pses;
+
+    Imagen I;
+    I.LeerImagen(argv[2]);
+
+    // Leemos los aviones
+    Imagen avion;
+    avion.LeerImagen(argv[5], argv[6]);
+
+    Almacen_Rutas Ar;
+    f.close();
+    f.open(argv[4]);
+    f >> Ar;
+    cout << "Las rutas: " << endl << Ar;
+    cout << "Dime el codigo de una ruta" << endl;
+    string a;
+    cin >> a;
+
+
+    Ruta R = Ar.GetRuta(a);
+
+    Ruta::iterator it_r, it_r_anterior;
+    Paises::iterator it_p_anterior = Pses.end();
+    Paises::iterator it_p = Pses.end();
+    Imagen bandera_ini;
+    int posi_ini, posj_ini;
+
+    vector <string> paises_recorridos; // Vector para almacenar los nombres de los países recorridos
+
+
+    for (it_r = R.begin(); it_r != R.end(); ++it_r) {
+        Punto pto = (*it_r);
+
+        it_p_anterior = it_p;
+        it_p = Pses.find(pto);
+
+        string name = (*it_p).GetBandera();
+        string n_com = argv[3] + name;
+
+        Imagen bandera;
+        bandera.LeerImagen(n_com.c_str(), "");
+
+        int x = (int) ((I.num_cols() / 360.0) * (180 + pto.getLongitud()));
+        int y = (int) ((I.num_filas() / 180.0) * (90 - pto.getLatitud()));
+
+        if (it_p_anterior != Pses.end()) {
+            int x_old = (int) ((I.num_cols() / 360.0) * (180 + (*it_r_anterior).getLongitud()));
+            int y_old = (int) ((I.num_filas() / 180.0) * (90 - (*it_r_anterior).getLatitud()));
+
+            Pintar(y_old - avion.num_filas() / 2, y - avion.num_filas() / 2,
+                   x_old - avion.num_cols() / 2, x - avion.num_cols() / 2,
+                   I, avion, 50, 50);
+        }
+
+        I.PutImagen(y - bandera.num_filas() / 2, x - bandera.num_cols() / 2, bandera, BLENDING);
+
+        if (it_p != Pses.begin())
+            I.PutImagen(posi_ini - bandera_ini.num_filas() / 2, posj_ini - bandera_ini.num_cols() / 2, bandera_ini,
+                        BLENDING);
+
+        bandera_ini = bandera;
+        posi_ini = y;
+        posj_ini = x;
+        it_r_anterior = it_r;
+
+        // Agregar el nombre del país recorrido al vector
+        if (it_p != Pses.end()) {
+            paises_recorridos.push_back((*it_p).GetPais());
+        }
+    }
+
+    // Código para pintar banderas en el mapa...
+
+    string nuevo_mapa = "mapa_" + a + ".ppm";
+    I.EscribirImagen(nuevo_mapa.c_str());
+
+    cout << "Paises recorridos: " << endl;
+    for (int i = 0; i < paises_recorridos.size(); i++) {
+        cout << paises_recorridos[i];
+        if (i != paises_recorridos.size() - 1)
+            cout << " -> ";
+    }
+    cout << "\n";
+
     return 0;
-  }
-
-  Paises Pses;
-  ifstream f(argv[1]);
-  f >> Pses;
-  // cout << Pses;
-
-  Imagen I;
-  I.LeerImagen(argv[2]);
-  
-  // Leemos los aviones 
-  Imagen avion;
-  avion.LeerImagen(argv[5], argv[6]);
-  
-  Almacen_Rutas Ar;
-  f.close();
-  f.open(argv[4]);
-  f >> Ar;
-  cout << "Las rutas: " << endl << Ar;
-  cout << "Dime el codigo de una ruta" << endl;
-  string a;
-  cin >> a;
-  Ruta R = Ar.GetRuta(a);
-  
-  Ruta::iterator it_r, it_r_anterior;
-  Paises::iterator it_p_anterior = Pses.end();
-  Paises::iterator it_p = Pses.end();
-  Imagen bandera_ini;
-  int posi_ini, posj_ini;
-
-  for(it_r = R.begin(); it_r != R.end(); ++it_r) 
-  {
-    Punto pto = (*it_r);
-      
-    it_p_anterior = it_p;
-    it_p = Pses.find(pto);
-      
-    string name = (*it_p).GetBandera();
-    string n_com = argv[3] + name;
-      
-    Imagen bandera;
-    bandera.LeerImagen(n_com.c_str(), "");
-	
-    int x = (int)((I.num_cols() / 360.0) * (180 + pto.getLongitud()));
-	  int y = (int)((I.num_filas() / 180.0) * (90-pto.getLatitud()));
-	
-    if(it_p_anterior != Pses.end()) 
-    {
-	    int x_old = (int)((I.num_cols() / 360.0) * (180 + (*it_r_anterior).getLongitud()));
-	    int y_old = (int)((I.num_filas() / 180.0) * (90 - (*it_r_anterior).getLatitud()));
-	  
-	    Pintar(y_old - avion.num_filas() / 2, y - avion.num_filas() / 2, 
-             x_old - avion.num_cols() / 2, x - avion.num_cols() / 2, 
-             I, avion, 50, 50);
-	  }
-	  
-	  I.PutImagen(y - bandera.num_filas() / 2, x - bandera.num_cols() / 2, bandera, BLENDING);
-	
-    if(it_p != Pses.begin())
-	    I.PutImagen(posi_ini - bandera_ini.num_filas() / 2, posj_ini - bandera_ini.num_cols() / 2, bandera_ini, BLENDING);
-
-	  bandera_ini = bandera;
-	  posi_ini = y;
-	  posj_ini = x;
-	  it_r_anterior = it_r;
-  }	
-      
-  string nuevo_mapa = "mapa_" + a + ".ppm";
-  I.EscribirImagen(nuevo_mapa.c_str());
 }
