@@ -44,6 +44,10 @@ public:
 
     class const_iterator;
 
+    /**
+    * @class iterator
+    * @brief Iterador para recorrer y manipular el conjunto de países
+    */
     class iterator {
     private:
         set<Pais>::iterator p;
@@ -87,6 +91,10 @@ public:
         friend class const_iterator;
     };
 
+    /**
+     * @class const_iterator
+     * @brief Iterador constante para recorrer el conjunto de países
+     */
     class const_iterator {
     private:
         set<Pais>::const_iterator p;
@@ -128,33 +136,52 @@ public:
         friend class Paises;
     };
 
+    /**
+    * @brief Obtiene un iterador al principio del conjunto de países
+    * @return Iterador al principio del conjunto
+    */
     iterator begin() {
         iterator it;
         it.p = datos.begin();
         return it;
     }
 
+    /**
+     * @brief Obtiene un iterador constante al principio del conjunto de países
+     * @return Iterador constante al principio del conjunto
+     */
     const_iterator begin() const {
         const_iterator it;
         it.p = datos.begin();
         return it;
     }
 
+    /**
+ * @brief Obtiene un iterador al final del conjunto de países
+ * @return Iterador al final del conjunto
+ */
     iterator end() {
         iterator it;
         it.p = datos.end();
         return it;
     }
 
+    /**
+ * @brief Obtiene un iterador constante al final del conjunto de países
+ * @return Iterador constante al final del conjunto
+ */
     const_iterator end() const {
         const_iterator it;
         it.p = datos.end();
         return it;
     }
 
-    // Función para encontrar un país en el conjunto según el nombre
-    iterator find(const Pais &p)
-    {
+    /**
+ * @brief Encuentra un país en el conjunto según el objeto Pais proporcionado
+ * @param p Objeto Pais a buscar
+ * @return Iterador apuntando al país encontrado o al final si no se encuentra
+ */
+    iterator find(const Pais &p) {
         iterator it;
         set<Pais>::iterator i;
         for (i = datos.begin(); i != datos.end() && !((*i) == p); ++i);
@@ -162,9 +189,12 @@ public:
         return it;
     }
 
-    // Función para encontrar un país en el conjunto según su ubicación
-    iterator find(const Punto &p)
-    {
+    /**
+ * @brief Encuentra un país en el conjunto según el objeto Punto proporcionado
+ * @param p Objeto Punto a buscar
+ * @return Iterador apuntando al país encontrado o al final si no se encuentra
+ */
+    iterator find(const Punto &p) {
         iterator it;
         set<Pais>::iterator i;
         for (i = datos.begin(); i != datos.end() && !(*i == p); ++i);
@@ -172,34 +202,39 @@ public:
         return it;
     }
 
-    // Sobrecarga del operador de inserción >>
-    friend istream &operator>>(istream &is, Paises &R)
-    {
+    /**
+ * @brief Sobrecarga del operador de inserción >>
+ * @param is Flujo de entrada
+ * @param R Objeto Paises en el que se insertarán los países leídos
+ * @return Referencia al flujo de entrada
+ */
+    friend istream &operator>>(istream &is, Paises &R) {
         Paises rlocal;
         // leemos el comentario
-        if (is.peek() == '#')
-        {
+        if (is.peek() == '#') {
             string a;
             getline(is, a);
         }
 
         Pais P;
 
-        while (is >> P)
-        {
+        while (is >> P) {
             rlocal.Insertar(P);
         }
         R = rlocal;
         return is;
     }
 
-    // Sobrecarga del operador de extracción <<
-    friend ostream &operator<<(ostream &os, const Paises &R)
-    {
+    /**
+ * @brief Sobrecarga del operador de extracción <<
+ * @param os Flujo de salida
+ * @param R Objeto Paises que se imprimirá en el flujo de salida
+ * @return Referencia al flujo de salida
+ */
+    friend ostream &operator<<(ostream &os, const Paises &R) {
         Paises::const_iterator it;
 
-        for (it = R.begin(); it != R.end(); ++it)
-        {
+        for (it = R.begin(); it != R.end(); ++it) {
             os << *it << "\t";
         }
         return os;
