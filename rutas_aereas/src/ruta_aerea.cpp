@@ -93,6 +93,18 @@ Imagen Rota(const Imagen &Io, double angulo) {
     return Iout;
 }
 
+
+/**
+ * @brief Dibuja la representación de un avión entre dos puntos dados en una imagen.
+ * @param f1 Coordenada de fila del primer punto.
+ * @param f2 Coordenada de fila del segundo punto.
+ * @param c1 Coordenada de columna del primer punto.
+ * @param c2 Coordenada de columna del segundo punto.
+ * @param I Imagen donde se dibujará la representación del avión.
+ * @param avion Imagen que representa al avión a dibujar.
+ * @param mindisf Mínima distancia en filas para dibujar el avión.
+ * @param mindisc Mínima distancia en columnas para dibujar el avión.
+ */
 void Pintar(int f1, int f2, int c1, int c2, Imagen &I, const Imagen &avion, int mindisf, int mindisc) {
     int fila, col;
 
