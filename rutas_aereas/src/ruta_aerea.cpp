@@ -1,3 +1,9 @@
+/**
+  * @file ruta_aerea.cpp
+  * @brief Fichero con el programa principal
+  *
+  */
+
 #include "imagen.h"
 #include "paises.h"
 #include "almacenRutas.h"
