@@ -1,24 +1,22 @@
-/*! \mainpage Practica 1. Imagen
+/*! \mainpage Practica Final. Rutas Aéreas
 
 @image html meme.jpeg "xd"
 
-##*
 ◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
-##*
 
-##Intro
+
+# Intro
 
 La práctica se enfoca en elegir la mejor estructura de datos para tareas específicas, requiriendo un sólido conocimiento en
 eficiencia de algoritmos, abstracción de datos y estructuras diversas. Su objetivo es crear un software que permita
 a una aerolínea visualizar sus rutas en un mapa mundial, mostrando banderas y aviones para marcar países y la ruta
-con precisión. Hemos definido las estructuras de Punto, Ruta, Almacén de Rutas e Imagen, además de probar
+con precisión. Hemos definido las estructuras de Punto, Ruta, Almacen_Rutas e Imagen, además de probar
 exhaustivamente las funciones antes de su implementación.
 
-##*
-◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
-##*
 
-# Ejecutables
+◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
+
+# Programa principal: Ruta aérea
 
 El programa "Ruta Aérea" tiene como objetivo generar un mapa mundial con una ruta específica sobre él. Requiere que el
 usuario ingrese archivos de países, rutas, una imagen del mapa, la representación gráfica de un avión y su máscara,
@@ -37,15 +35,57 @@ La conversión de coordenadas a píxeles en la imagen se realiza utilizando ecua
 longitud y la latitud para determinar la posición en la imagen del mapa mundial, permitiendo una representación precisa
 de la ruta y sus elementos gráficos.
 
-##*
-◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
-##*
-## Imagen:
+Podemos estructurar el codigo de la siguiente manera:
 
-##*
+##Inclusión de Librerías:
+
+`#include "imagen.h", #include "paises.h", #include "almacenRutas.h"` : Incluyen archivos de encabezado que contienen las definiciones de clases y funciones necesarias para el código.
+<math.h>, <iostream>, <fstream>, <vector>: Importan librerías estándar de C++ para operaciones matemáticas, entrada/salida, manejo de archivos y el uso de vectores.
+
+
+##Definición de la Función Rota:
+
+> __Rota__ \<Io\> \<angulo\>
+ @param Io: imagen de entrada
+ @param angulo: angulo a rotar la imagen de entrada. Debe estar en radianes.
+
+
+Esta función toma una imagen de entrada (Io) y un ángulo en radianes para generar una nueva imagen rotada.
+Calcula las dimensiones de la imagen resultante después de la rotación y crea una nueva imagen (Iout) con esas dimensiones.
+Realiza la rotación de la imagen de entrada, calculando las nuevas posiciones de los píxeles de acuerdo al ángulo dado.
+Devuelve la imagen resultante después de la rotación.
+
+
+##Definición de la Función Pintar:
+
+> __Pintar__ \<f1\> \<f2\> \<c1\> \<c2\> \<I\> \<avion\> \<mindisf\> \<mindisc\>
+@param f1 Coordenada de fila del primer punto.
+@param f2 Coordenada de fila del segundo punto.
+@param c1 Coordenada de columna del primer punto.
+@param c2 Coordenada de columna del segundo punto.
+@param I Imagen donde se dibujará la representación del avión.
+@param avion Imagen que representa al avión a dibujar.
+@param mindisf Mínima distancia en filas para dibujar el avión.
+@param mindisc Mínima distancia en columnas para dibujar el avión.
+
+Esta función dibuja la representación de un avión entre dos puntos dados en una imagen.
+Calcula la posición intermedia entre los puntos y coloca la imagen del avión en esa posición en la imagen principal (I).
+
+
+##Función main:
+
+Verifica si se proporcionan los argumentos necesarios para la ejecución.
+Lee archivos de información de países, el mapa del mundo, directorio de banderas, almacenamiento de rutas, imagen del avión y máscara del avión.
+Procesa las rutas obteniendo información de los países y dibujando banderas y aviones en posiciones correspondientes en el mapa.
+Guarda la imagen resultante del mapa con las rutas aéreas y muestra los países recorridos.
+
+Ejemplo de R5:
+
+@image html mapa_R5.jpeg "Imagen R5"
+
 ◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢◣◥◣◥◤◢◤◢
-##*
-## Rutas aereas:
+
+
 
 
 */
