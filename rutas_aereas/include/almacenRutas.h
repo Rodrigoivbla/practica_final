@@ -12,11 +12,11 @@
 /**
  * @brief Clase que representa un almacén de rutas
  */
-class Almacen_Rutas{
-  private:
-    map<string, Ruta> almacen; /**< Mapa que almacena las rutas */
+class Almacen_Rutas {
+private:
+    map <string, Ruta> almacen; /**< Mapa que almacena las rutas */
 
-  public:
+public:
     /**
      * @brief Constructor por defecto
      */
@@ -27,8 +27,7 @@ class Almacen_Rutas{
      * @param s Nombre de la ruta a obtener
      * @return Ruta correspondiente al nombre proporcionado
      */
-    Ruta GetRuta(const string &s)
-    {
+    Ruta GetRuta(const string &s) {
         return almacen[s];
     }
 
@@ -36,8 +35,7 @@ class Almacen_Rutas{
      * @brief Inserta una ruta en el almacén
      * @param R Ruta a insertar
      */
-    void Insertar(const Ruta &R)
-    {
+    void Insertar(const Ruta &R) {
         almacen[R.getNombre()] = R;
     }
 
@@ -45,135 +43,188 @@ class Almacen_Rutas{
      * @brief Borra una ruta del almacén
      * @param s Nombre de la ruta a borrar
      */
-    void Borrar(const string &s)
-    {
+    void Borrar(const string &s) {
         almacen.erase(s);
     }
 
     class const_iterator;
-    class iterator
-    {
+
+    class iterator {
     private:
         map<string, Ruta>::iterator p;
 
     public:
-        iterator(): p(0)
-        {}
+        /**
+     * @brief Constructor por defecto del iterador
+     */
+        iterator() : p(0) {}
 
-        iterator(const iterator &otro): p(otro.p)
-        {}
+        /**
+     * @brief Constructor de copia del iterador
+     * @param otro Iterador a copiar
+     */
+        iterator(const iterator &otro) : p(otro.p) {}
 
-        ~iterator()
-        {}
+        ~iterator() {}
 
-        iterator& operator=(const iterator &otro)
-        {
+        iterator &operator=(const iterator &otro) {
             p = otro.p;
             return *this;
         }
 
-        const pair<string, Ruta>& operator*() const
-        {
+        const pair <string, Ruta> &operator*() const {
             return *p;
         }
 
-        iterator& operator++()
-        {
+        iterator &operator++() {
             ++p;
             return *this;
         }
 
-        iterator& operator--()
-        {
+        iterator &operator--() {
             --p;
             return *this;
         }
 
-        bool operator!=(const iterator &otro) const
-        {
+        /**
+    * @brief Sobrecarga del operador de desigualdad !=
+    * @param otro Iterador a comparar
+    * @return true si los iteradores son diferentes, false en caso contrario
+    */
+        bool operator!=(const iterator &otro) const {
             return p != otro.p;
         }
 
-        bool operator==(const iterator &otro) const
-        {
+        /**
+         * @brief Sobrecarga del operador de igualdad ==
+         * @param otro Iterador a comparar
+         * @return true si los iteradores son iguales, false en caso contrario
+         */
+        bool operator==(const iterator &otro) const {
             return p == otro.p;
         }
 
         friend class Almacen_Rutas;
+
         friend class const_iterator;
     };
 
-    class const_iterator{
+    class const_iterator {
     private:
-        map<string,Ruta>::const_iterator p;
+        map<string, Ruta>::const_iterator p;
 
     public:
-        
 
-        const_iterator(): p(0)
-        {}
 
-        const_iterator(const iterator &otro): p(otro.p)
-        {}
+        /**
+     * @brief Constructor por defecto del iterador constante
+     */
+        const_iterator() : p(0) {}
 
-        ~const_iterator()
-        {}
+        /**
+         * @brief Constructor de copia del iterador constante
+         * @param otro Iterador constante a copiar
+         */
+        const_iterator(const iterator &otro) : p(otro.p) {}
 
-        const_iterator& operator++(){
+        /**
+     * @brief Destructor del iterador constante
+     */
+        ~const_iterator() {}
+
+        /**
+    * @brief Sobrecarga del operador de incremento ++
+    * @return Referencia al iterador incrementado
+    */
+        const_iterator &operator++() {
             ++p;
             return *this;
         }
 
-        const_iterator& operator--(){
+        /**
+         * @brief Sobrecarga del operador de decremento --
+         * @return Referencia al iterador decrementado
+         */
+        const_iterator &operator--() {
             --p;
             return *this;
         }
 
-        bool operator==(const const_iterator &it){
+        /**
+         * @brief Sobrecarga del operador de igualdad ==
+         * @param it Otro iterador constante a comparar
+         * @return true si los iteradores son iguales, false en caso contrario
+         */
+        bool operator==(const const_iterator &it) {
             return p == it.p;
         }
 
-        bool operator!=(const const_iterator &it){
+        /**
+         * @brief Sobrecarga del operador de desigualdad !=
+         * @param it Otro iterador constante a comparar
+         * @return true si los iteradores son diferentes, false en caso contrario
+         */
+        bool operator!=(const const_iterator &it) {
             return p != it.p;
         }
 
-        const pair<string,Ruta> operator*(){
+        /**
+         * @brief Sobrecarga del operador de desreferenciación *
+         * @return Par de valores clave/valor asociado al iterador
+         */
+        const pair <string, Ruta> operator*() {
             return *p;
         }
 
         friend class Almacen_Rutas;
     };
 
-    iterator begin()
-    {
+    /**
+ * @brief Devuelve un iterador al inicio del conjunto de rutas
+ * @return Iterador al inicio del conjunto
+ */
+    iterator begin() {
         iterator it;
         it.p = almacen.begin();
         return it;
     }
 
-    const_iterator begin() const 
-    {
+    /**
+ * @brief Devuelve un iterador constante al inicio del conjunto de rutas
+ * @return Iterador constante al inicio del conjunto
+ */
+    const_iterator begin() const {
         const_iterator it;
         it.p = almacen.begin();
         return it;
-    } 
-    
-    iterator end()
-    {
+    }
+
+    /**
+ * @brief Devuelve un iterador al final del conjunto de rutas
+ * @return Iterador al final del conjunto
+ */
+    iterator end() {
         iterator it;
         it.p = almacen.end();
         return it;
     }
-    
-    const_iterator end() const 
-    {
+
+    /**
+ * @brief Devuelve un iterador constante al final del conjunto de rutas
+ * @return Iterador constante al final del conjunto
+ */
+    const_iterator end() const {
         const_iterator it;
         it.p = almacen.end();
         return it;
     }
 
-    iterator find(const string &s)
-    {
+    /**
+ * @brief Encuentra una ruta en el conjunto según el nombre proporcionado
+ * @param s Nombre de la ruta a buscar
+ * @return Iterador apuntando a la ruta encontrada o al final si no se encuentra
+ */
+    iterator find(const string &s) {
         iterator it;
         map<string, Ruta>::iterator i;
         for (i = almacen.begin(); i != almacen.end() && !((*i).first == s); ++i);
@@ -187,23 +238,20 @@ class Almacen_Rutas{
      * @param AR Almacén de rutas
      * @return Referencia al stream de entrada
      */
-    friend istream &operator>>(istream &is, Almacen_Rutas &AR)
-    {
+    friend istream &operator>>(istream &is, Almacen_Rutas &AR) {
         Almacen_Rutas arlocal;
         // leemos el comentario
-        if (is.peek() == '#')
-        {
+        if (is.peek() == '#') {
             string a;
             getline(is, a);
         }
 
         Ruta R;
-        
-        while (is >> R)
-        {
+
+        while (is >> R) {
             arlocal.Insertar(R);
         }
-        
+
         AR = arlocal;
         return is;
     }
@@ -214,13 +262,11 @@ class Almacen_Rutas{
      * @param AR Almacén de rutas
      * @return Referencia al stream de salida
      */
-    friend ostream &operator<<(ostream &os, const Almacen_Rutas &AR)
-    {
+    friend ostream &operator<<(ostream &os, const Almacen_Rutas &AR) {
         os << "#Rutas" << endl;
         Almacen_Rutas::const_iterator it;
 
-        for (it = AR.begin(); it != AR.end(); ++it)
-        {
+        for (it = AR.begin(); it != AR.end(); ++it) {
             os << (*it).first << " " << (*it).second << "\t" << endl;
         }
         return os;
